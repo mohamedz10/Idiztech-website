@@ -47,7 +47,7 @@
   nav.scrolled,nav.open{background:var(--navbg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
   nav .bar{display:flex;align-items:center;justify-content:space-between;gap:20px;height:68px}
   .logo{display:block;flex:none}
-  .logo img{display:block;width:44px;height:44px;border-radius:50%;box-shadow:0 0 0 1px var(--line);transition:transform .3s}
+  .logo img{display:block;width:56px;height:56px;border-radius:50%;box-shadow:0 0 0 1px var(--line);transition:transform .3s}
   .logo:hover img{transform:rotate(-8deg)}
   nav ul{display:flex;gap:30px;list-style:none;font-size:14px;color:var(--mute)}
   nav ul a{transition:color .2s}
@@ -75,11 +75,12 @@
   h1{font:400 clamp(48px,9vw,128px)/.95 var(--serif);letter-spacing:-.03em;margin:28px 0 0;text-wrap:balance}
   h1 i{color:var(--mute)}
   .prompt{margin-top:56px;max-width:720px;border:1px solid var(--line);border-radius:18px;background:var(--soft);padding:22px 24px}
-  .prompt .q{display:flex;gap:12px;align-items:center;font:400 14px/1.4 var(--mono);color:var(--mute);padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:16px}
-  .prompt .q b{width:22px;height:22px;border-radius:50%;border:1px solid var(--mute);flex:none}
-  .prompt .a{display:flex;gap:12px}
-  .prompt .a .dot{width:22px;height:22px;flex:none;border-radius:50%;background:var(--fg);margin-top:3px;position:relative}
-  .prompt .a .dot::after{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--bg)}
+  .prompt .who{display:block;font:400 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+  .prompt .q{display:flex;flex-direction:column;align-items:flex-end;text-align:right;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:18px}
+  .prompt .q p{font:400 14px/1.5 var(--mono);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:16px 16px 4px 16px;padding:10px 14px;max-width:85%;text-align:left}
+  .prompt .a{display:flex;gap:14px;align-items:flex-start}
+  .prompt .a .av{width:30px;height:30px;flex:none;border-radius:50%;box-shadow:0 0 0 1px var(--line)}
+  .prompt .a>div{min-width:0}
   .prompt .a p{font-size:17px;color:var(--fg);min-width:0}
   .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);width:44px;height:44px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--mute);transition:color .25s,border-color .25s}
   .scroll-hint:hover{color:var(--fg);border-color:var(--fg)}
@@ -106,6 +107,9 @@
   .services{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
   .svc{padding:44px 40px 48px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;transition:background .35s;min-width:0}
   .svc:hover{background:var(--soft)}
+  .svc-ai{grid-column:1/-1}
+  .svc-ai h3{font-size:clamp(34px,4vw,48px)}
+  .svc-ai p{max-width:46em}
   .svc .n{font:400 12px var(--mono);color:var(--mute);letter-spacing:.1em}
   .svc h3{font:400 34px/1.1 var(--serif);margin:28px 0 14px}
   .svc p{color:var(--mute);font-size:16px}
@@ -122,7 +126,7 @@
   .logos-mq img{display:block;flex:none;max-width:none;height:50px;width:auto;opacity:.6;transition:opacity .3s,filter .4s}
   .logos-mq img:hover{opacity:1}
   :root[data-theme="light"] .logos-mq img{filter:invert(1);opacity:.7}
-  .logos-mq .lg-commission-europeenne{height:84px}.logos-mq .lg-spf-finances{height:62px}.logos-mq .lg-bedigit{height:40px}
+  .logos-mq .lg-commission-europeenne{height:84px}.logos-mq .lg-spf-finances{height:62px}.logos-mq .lg-bedigit{height:40px}.logos-mq .lg-inetum{height:28px}.logos-mq .lg-smals{height:56px}
   @keyframes mq{to{transform:translateX(-50%)}}
 
   /* method */
@@ -181,10 +185,10 @@
     .clients{padding-block:72px 0}
     .contact{padding-block:120px}
     .logos-mq .grp{gap:84px;padding-right:84px}
-    .logos-mq img{height:36px}.logos-mq .lg-commission-europeenne{height:60px}.logos-mq .lg-spf-finances{height:46px}.logos-mq .lg-bedigit{height:30px}
+    .logos-mq img{height:36px}.logos-mq .lg-commission-europeenne{height:60px}.logos-mq .lg-spf-finances{height:46px}.logos-mq .lg-bedigit{height:30px}.logos-mq .lg-inetum{height:20px}.logos-mq .lg-smals{height:42px}
   }
   @media (max-width:420px){
-    .logo img{width:38px;height:38px}
+    .logo img{width:46px;height:46px}
     .langs button{min-width:32px;padding:0 6px}
     .tools{gap:6px}
     .prompt{padding:18px}
@@ -200,7 +204,7 @@
 
 <nav id="nav">
   <div class="wrap bar">
-    <a href="#top" class="logo" aria-label="Idiz Tech"><img src="logos/idiz-tech.png" alt="Idiz Tech" width="44" height="44"></a>
+    <a href="#top" class="logo" aria-label="Idiz Tech"><img src="logos/idiz-tech.png" alt="Idiz Tech" width="56" height="56"></a>
     <ul>
       <li><a href="#clients" data-i18n="nav.clients">Clients</a></li>
       <li><a href="#services" data-i18n="nav.services">Services</a></li>
@@ -241,9 +245,10 @@
   <div class="eyebrow rv" data-i18n="hero.eyebrow">Agence digitale · Bruxelles</div>
   <h1 class="rv" data-i18n-html="hero.title">Le digital,<br><i>pensé</i> avec précision.</h1>
   <div class="prompt rv">
-    <div class="q"><b></b><span data-i18n="hero.q">Qu'est-ce qu'Idiz Tech peut faire pour mon entreprise&nbsp;?</span></div>
-    <div class="a"><span class="dot"></span>
-      <p data-stream data-delay="900" data-i18n="hero.a">Nous concevons des sites web, des applications et des solutions IT sur mesure. Rapides, élégants, et pensés pour faire grandir votre activité.</p>
+    <div class="q"><span class="who" data-i18n="hero.you">Vous</span><p data-i18n="hero.q">Qu'est-ce qu'Idiz Tech peut faire pour mon entreprise&nbsp;?</p></div>
+    <div class="a"><img class="av" src="logos/idiz-tech.png" alt="" width="30" height="30">
+      <div><span class="who">Idiz Tech</span>
+      <p data-stream data-delay="900" data-i18n="hero.a">Nous concevons des sites web, des applications, des solutions IT et d'intelligence artificielle sur mesure. Rapides, élégants, et pensés pour faire grandir votre activité.</p></div>
     </div>
   </div>
   <a class="scroll-hint" href="#services" aria-label="Défiler vers le bas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M5 13l7 7 7-7"/></svg></a>
@@ -266,7 +271,9 @@
       <article class="svc rv"><span class="n">/03</span><span class="arrow">↗</span>
         <h3 data-i18n="svc.3.t">Support IT</h3><p data-stream data-i18n="svc.3.d">Installation, maintenance et dépannage de votre parc informatique et de votre réseau.</p></article>
       <article class="svc rv"><span class="n">/04</span><span class="arrow">↗</span>
-        <h3 data-i18n="svc.4.t">Conseil &amp; automatisation</h3><p data-stream data-i18n="svc.4.d">Audit, choix des outils, intégration de l'IA et automatisation de vos processus.</p></article>
+        <h3 data-i18n="svc.4.t">Conseil &amp; automatisation</h3><p data-stream data-i18n="svc.4.d">Audit, choix des outils et automatisation de vos processus.</p></article>
+      <article class="svc svc-ai rv"><span class="n">/05</span><span class="arrow">↗</span>
+        <h3 data-i18n="svc.5.t">Intégration de l'IA</h3><p data-stream data-i18n="svc.5.d">Assistants et chatbots, automatisation des tâches répétitives, recherche dans vos documents. Nous intégrons l'IA dans vos outils et dans votre société, de manière sûre et concrète.</p></article>
     </div>
   </div>
 </section>
@@ -274,8 +281,8 @@
 <section class="clients" id="clients" aria-labelledby="clients-t">
   <div class="wrap"><div class="eyebrow rv" id="clients-t" data-i18n="clients">Ils nous font confiance</div></div>
   <div class="logos-mq"><div class="track">
-    <div class="grp"><img class="lg-spf-finances" src="logos/spf-finances.png" alt="SPF Finances"><img class="lg-genesis-consult" src="logos/genesis-consult.png" alt="Genesis Consult"><img class="lg-cronos-europa" src="logos/cronos-europa.png" alt="Cronos Europa"><img class="lg-commission-europeenne" src="logos/commission-europeenne.png" alt="Commission européenne"><img class="lg-bedigit" src="logos/bedigit.png" alt="Bedigit"><img class="lg-b2r" src="logos/b2r.png" alt="Business to Responsibility"></div>
-    <div class="grp" aria-hidden="true"><img class="lg-spf-finances" src="logos/spf-finances.png" alt=""><img class="lg-genesis-consult" src="logos/genesis-consult.png" alt=""><img class="lg-cronos-europa" src="logos/cronos-europa.png" alt=""><img class="lg-commission-europeenne" src="logos/commission-europeenne.png" alt=""><img class="lg-bedigit" src="logos/bedigit.png" alt=""><img class="lg-b2r" src="logos/b2r.png" alt=""></div>
+    <div class="grp"><img class="lg-spf-finances" src="logos/spf-finances.png" alt="SPF Finances"><img class="lg-genesis-consult" src="logos/genesis-consult.png" alt="Genesis Consult"><img class="lg-cronos-europa" src="logos/cronos-europa.png" alt="Cronos Europa"><img class="lg-commission-europeenne" src="logos/commission-europeenne.png" alt="Commission européenne"><img class="lg-bedigit" src="logos/bedigit.png" alt="Bedigit"><img class="lg-b2r" src="logos/b2r.png" alt="Business to Responsibility"><img class="lg-inetum" src="logos/inetum.png" alt="Inetum"><img class="lg-smals" src="logos/smals.png" alt="Smals"></div>
+    <div class="grp" aria-hidden="true"><img class="lg-spf-finances" src="logos/spf-finances.png" alt=""><img class="lg-genesis-consult" src="logos/genesis-consult.png" alt=""><img class="lg-cronos-europa" src="logos/cronos-europa.png" alt=""><img class="lg-commission-europeenne" src="logos/commission-europeenne.png" alt=""><img class="lg-bedigit" src="logos/bedigit.png" alt=""><img class="lg-b2r" src="logos/b2r.png" alt=""><img class="lg-inetum" src="logos/inetum.png" alt=""><img class="lg-smals" src="logos/smals.png" alt=""></div>
   </div></div>
 </section>
 
@@ -338,18 +345,18 @@
   const I18N = {
     fr: {
       "meta.title":"Idiz Tech · Solutions digitales à Bruxelles",
-      "meta.desc":"Idiz Tech conçoit des sites web, des applications et des solutions IT sur mesure pour les entreprises à Bruxelles.",
+      "meta.desc":"Idiz Tech conçoit des sites web, des applications, des solutions IT et d'intelligence artificielle sur mesure pour les entreprises à Bruxelles.",
       "nav.clients":"Clients","nav.services":"Services","nav.method":"Méthode","nav.about":"À propos","nav.cta":"Démarrer un projet",
       "hero.eyebrow":"Agence digitale · Bruxelles",
       "hero.title":"Le digital,<br><i>pensé</i> avec précision.",
       "hero.q":"Qu'est-ce qu'Idiz Tech peut faire pour mon entreprise ?",
-      "hero.a":"Nous concevons des sites web, des applications et des solutions IT sur mesure. Rapides, élégants, et pensés pour faire grandir votre activité.",
+      "hero.a":"Nous concevons des sites web, des applications, des solutions IT et d'intelligence artificielle sur mesure. Rapides, élégants, et pensés pour faire grandir votre activité.",
       "svc.eyebrow":"01 · Services","svc.title":"Ce que nous <i>faisons</i>.",
       "svc.lead":"Une équipe compacte, des outils modernes et une obsession du détail. Du premier croquis à la mise en ligne, nous restons à vos côtés.",
       "svc.1.t":"Sites web","svc.1.d":"Sites vitrines et e-commerce sur mesure, rapides, responsives et optimisés pour le référencement.",
       "svc.2.t":"Applications","svc.2.d":"Applications web et mobiles, back-offices et API connectés à vos outils métier.",
       "svc.3.t":"Support IT","svc.3.d":"Installation, maintenance et dépannage de votre parc informatique et de votre réseau.",
-      "svc.4.t":"Conseil & automatisation","svc.4.d":"Audit, choix des outils, intégration de l'IA et automatisation de vos processus.",
+      "svc.4.t":"Conseil & automatisation","hero.you":"Vous","svc.5.t":"Intégration de l'IA","svc.5.d":"Assistants et chatbots, automatisation des tâches répétitives, recherche dans vos documents. Nous intégrons l'IA dans vos outils et dans votre société, de manière sûre et concrète.","svc.4.d":"Audit, choix des outils et automatisation de vos processus.",
       "clients":"Ils nous font confiance",
       "m.eyebrow":"02 · Méthode","m.title":"Simple. <i>Clair.</i> Efficace.","m.lead":"Un processus en quatre étapes, transparent du début à la fin.",
       "m.1.t":"Écoute","m.1.d":"Nous comprenons vos objectifs, vos contraintes et votre public.",
@@ -368,18 +375,18 @@
     },
     nl: {
       "meta.title":"Idiz Tech · Digitale oplossingen in Brussel",
-      "meta.desc":"Idiz Tech ontwerpt websites, applicaties en IT-oplossingen op maat voor bedrijven in Brussel.",
+      "meta.desc":"Idiz Tech ontwerpt websites, applicaties, IT- en AI-oplossingen op maat voor bedrijven in Brussel.",
       "nav.clients":"Klanten","nav.services":"Diensten","nav.method":"Methode","nav.about":"Over ons","nav.cta":"Start een project",
       "hero.eyebrow":"Digitaal bureau · Brussel",
       "hero.title":"Digitaal,<br><i>doordacht</i> tot in detail.",
       "hero.q":"Wat kan Idiz Tech voor mijn bedrijf doen?",
-      "hero.a":"Wij ontwerpen websites, applicaties en IT-oplossingen op maat. Snel, elegant en gebouwd om uw activiteit te laten groeien.",
+      "hero.a":"Wij ontwerpen websites, applicaties, IT- en AI-oplossingen op maat. Snel, elegant en gebouwd om uw activiteit te laten groeien.",
       "svc.eyebrow":"01 · Diensten","svc.title":"Wat wij <i>doen</i>.",
       "svc.lead":"Een compact team, moderne tools en oog voor elk detail. Van de eerste schets tot de lancering staan we aan uw zijde.",
       "svc.1.t":"Websites","svc.1.d":"Showcase- en e-commercesites op maat: snel, responsive en geoptimaliseerd voor zoekmachines.",
       "svc.2.t":"Applicaties","svc.2.d":"Web- en mobiele applicaties, back-offices en API's gekoppeld aan uw bedrijfstools.",
       "svc.3.t":"IT-support","svc.3.d":"Installatie, onderhoud en herstelling van uw computers en uw netwerk.",
-      "svc.4.t":"Advies & automatisering","svc.4.d":"Audit, keuze van tools, integratie van AI en automatisering van uw processen.",
+      "svc.4.t":"Advies & automatisering","hero.you":"U","svc.5.t":"AI-integratie","svc.5.d":"Assistenten en chatbots, automatisering van repetitieve taken, zoeken in uw documenten. Wij integreren AI in uw tools en in uw bedrijf, veilig en concreet.","svc.4.d":"Audit, keuze van tools en automatisering van uw processen.",
       "clients":"Zij vertrouwen ons",
       "m.eyebrow":"02 · Methode","m.title":"Eenvoudig. <i>Helder.</i> Efficiënt.","m.lead":"Een proces in vier stappen, transparant van begin tot eind.",
       "m.1.t":"Luisteren","m.1.d":"We begrijpen uw doelen, uw beperkingen en uw publiek.",
@@ -398,18 +405,18 @@
     },
     en: {
       "meta.title":"Idiz Tech · Digital solutions in Brussels",
-      "meta.desc":"Idiz Tech designs websites, applications and custom IT solutions for businesses in Brussels.",
+      "meta.desc":"Idiz Tech designs websites, applications and custom IT and AI solutions for businesses in Brussels.",
       "nav.clients":"Clients","nav.services":"Services","nav.method":"Method","nav.about":"About","nav.cta":"Start a project",
       "hero.eyebrow":"Digital agency · Brussels",
       "hero.title":"Digital,<br><i>crafted</i> with precision.",
       "hero.q":"What can Idiz Tech do for my business?",
-      "hero.a":"We design websites, applications and custom IT solutions. Fast, elegant, and built to help your business grow.",
+      "hero.a":"We design websites, applications and custom IT and AI solutions. Fast, elegant, and built to help your business grow.",
       "svc.eyebrow":"01 · Services","svc.title":"What we <i>do</i>.",
       "svc.lead":"A compact team, modern tools and an obsession with detail. From the first sketch to launch, we stay by your side.",
       "svc.1.t":"Websites","svc.1.d":"Custom showcase and e-commerce sites: fast, responsive and optimised for search engines.",
       "svc.2.t":"Applications","svc.2.d":"Web and mobile apps, back-offices and APIs connected to your business tools.",
       "svc.3.t":"IT support","svc.3.d":"Installation, maintenance and repair of your computers and network.",
-      "svc.4.t":"Consulting & automation","svc.4.d":"Audits, tool selection, AI integration and automation of your processes.",
+      "svc.4.t":"Consulting & automation","hero.you":"You","svc.5.t":"AI integration","svc.5.d":"Assistants and chatbots, automation of repetitive tasks, search across your documents. We bring AI into your tools and your company, safely and practically.","svc.4.d":"Audits, tool selection and automation of your processes.",
       "clients":"They trust us",
       "m.eyebrow":"02 · Method","m.title":"Simple. <i>Clear.</i> Effective.","m.lead":"A four-step process, transparent from start to finish.",
       "m.1.t":"Listen","m.1.d":"We understand your goals, your constraints and your audience.",

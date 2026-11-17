@@ -281,7 +281,7 @@ const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - 
   /* 6. Client logos */
   console.log('\nLogos clients');
   for (const w of [390, 1440]) {
-    await test(`${w}px : les 12 logos se chargent, ne se chevauchent pas et défilent`, async () => {
+    await test(`${w}px : les 16 logos se chargent, ne se chevauchent pas et défilent`, async () => {
       const { ctx, page, problems } = await openPage(browser, URL, { viewport: { width: w, height: 900 } });
       await page.evaluate(() => document.querySelector('#clients').scrollIntoView());
       await page.waitForTimeout(800);
@@ -297,7 +297,7 @@ const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - 
       const x2 = await page.evaluate(() => document.querySelector('.logos-mq .track').getBoundingClientRect().left);
       await ctx.close();
       assert(!problems.length, problems.join('\n'));
-      assert(r.n === 12, `${r.n} logos au lieu de 12`);
+      assert(r.n === 16, `${r.n} logos au lieu de 16`);
       assert(!r.broken.length, 'logos cassés : ' + r.broken.join(', '));
       assert(!r.overlaps, `${r.overlaps} logo(s) trop proches (< 40px)`);
       assert(!r.squished, `${r.squished} logo(s) déformés`);
