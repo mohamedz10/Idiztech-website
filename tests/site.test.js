@@ -313,18 +313,29 @@ const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - 
 
   /* 7. Animations */
   console.log('\nAnimations');
-  await test('le texte s\'écrit mot par mot au scroll, puis le curseur disparaît', async () => {
+  await test('le texte s\'écrit par petits groupes de mots au scroll, avec l\'étoile animée, puis elle disparaît', async () => {
     const { ctx, page } = await openPage(browser, URL);
     await page.evaluate(() => document.querySelector('#services').scrollIntoView());
-    await page.waitForTimeout(700);
-    const mid = await page.evaluate(() => { const e = document.querySelector('[data-i18n="svc.lead"]'); return [e.querySelectorAll('.tok').length, !!e.querySelector('.caret'), e.textContent.length]; });
-    await page.waitForTimeout(6000);
+    await page.waitForFunction(() => document.querySelector('[data-i18n="svc.lead"] .tok'), null, { timeout: 4000 });
+    const mid = await page.evaluate(() => { const e = document.querySelector('[data-i18n="svc.lead"]'); return [!!e.querySelector('.caret svg'), e.textContent.length]; });
+    await page.waitForTimeout(2500);
     const end = await page.evaluate(() => { const e = document.querySelector('[data-i18n="svc.lead"]'); return [!!e.querySelector('.caret'), e.textContent.trim()]; });
     await ctx.close();
-    assert(mid[0] > 0 && mid[1], 'aucune écriture progressive détectée');
-    assert(mid[2] < I18N.fr['svc.lead'].length, 'le texte était déjà complet (pas d\'effet)');
-    assert(!end[0], 'le curseur reste affiché');
+    assert(mid[0], 'pas d\'étoile animée pendant l\'écriture');
+    assert(mid[1] < I18N.fr['svc.lead'].length, 'le texte était déjà complet (pas d\'effet)');
+    assert(!end[0], 'l\'étoile reste affichée');
     assert(end[1] === I18N.fr['svc.lead'], 'texte final différent');
+  });
+  await test('le haut de page affiche « Réflexion… » puis la réponse complète en moins de 4 s', async () => {
+    const { ctx, page } = await openPage(browser, URL);
+    await page.waitForFunction(() => document.querySelector('[data-i18n="hero.a"] .think'), null, { timeout: 2000 });
+    const think = await page.evaluate(() => document.querySelector('[data-i18n="hero.a"] .think').textContent);
+    const t0 = Date.now();
+    await page.waitForFunction(t => { const e = document.querySelector('[data-i18n="hero.a"]'); return !e.querySelector('.caret') && e.textContent.trim() === t; }, I18N.fr['hero.a'], { timeout: 6000 });
+    const ms = Date.now() - t0;
+    await ctx.close();
+    assert(think === I18N.fr['hero.thinking'], 'étiquette : ' + think);
+    assert(ms < 4000, `réponse trop lente : ${ms} ms`);
   });
   await test('les compteurs finissent sur 2021, 100% et 24h', async () => {
     const { ctx, page } = await openPage(browser, URL);
