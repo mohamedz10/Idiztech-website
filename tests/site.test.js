@@ -135,7 +135,7 @@ const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - 
     assert(!miss.length, 'manquant : ' + miss.join(', '));
   });
   await test('aucune traduction NL/EN n\'est restée identique au français (hors noms propres)', () => {
-    const same = ['nav.services', 'svc.2.t', 'm.2.t', 'c.eyebrow', 'nav.clients', 'svc.eyebrow'];
+    const same = ['nav.services', 'svc.2.t', 'm.2.t', 'c.eyebrow', 'nav.clients', 'svc.eyebrow', 'nav.faq', 'faq.eyebrow'];
     const dup = []; for (const l of ['nl', 'en']) for (const k in I18N.fr) if (I18N[l][k] === I18N.fr[k] && !same.includes(k)) dup.push(`${l}:${k}`);
     assert(!dup.length, 'non traduit : ' + dup.join(', '));
   });
@@ -402,6 +402,96 @@ const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - 
       assert(!/netlify/i.test(r.txt), 'mention Netlify visible');
     });
   }
+
+  /* 10. FAQ */
+  console.log('\nFAQ');
+  await test('la FAQ a 5 questions qui s\'ouvrent et se ferment au clic', async () => {
+    const { ctx, page } = await openPage(browser, URL);
+    const n = await page.locator('#faq details').count();
+    await page.locator('#faq summary').first().scrollIntoViewIfNeeded();
+    await page.locator('#faq summary').first().click();
+    const open = await page.evaluate(() => document.querySelector('#faq details').open);
+    const visible = await page.isVisible('#faq details p');
+    await page.locator('#faq summary').first().click();
+    const closed = await page.evaluate(() => !document.querySelector('#faq details').open);
+    await ctx.close();
+    assert(n === 5, `${n} questions`);
+    assert(open && visible, 'la réponse ne s\'affiche pas');
+    assert(closed, 'la question ne se referme pas');
+  });
+
+  /* 11. Legal pages */
+  console.log('\nPages légales');
+  for (const f of ['mentions-legales.html', 'confidentialite.html']) {
+    for (const [l, loc] of [['fr', 'fr-BE'], ['nl', 'nl-BE'], ['en', 'en-GB']]) {
+      await test(`${f} en ${l.toUpperCase()} : se charge, bonne langue, coordonnées et retour au site`, async () => {
+        const { ctx, page, problems } = await openPage(browser, URL.replace('index.html', f), { locale: loc });
+        const r = await page.evaluate(() => {
+          const a = document.querySelector('article:not([hidden])');
+          return { lang: document.documentElement.lang, shown: document.querySelectorAll('article:not([hidden])').length, artLang: a && a.lang,
+                   txt: a ? a.innerText : '', title: document.title, back: document.querySelector('.back').getAttribute('href'),
+                   sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth };
+        });
+        await ctx.close();
+        assert(!problems.length, problems.join('\n'));
+        assert(r.lang === l && r.shown === 1 && r.artLang === l, `langue affichée : ${r.artLang} (${r.shown} bloc(s))`);
+        assert(r.txt.includes('info@idiztech.be') && r.txt.includes('0772.379.227'), 'e-mail ou numéro d\'entreprise manquant');
+        assert(/Idiz Tech$/.test(r.title), 'titre : ' + r.title);
+        assert(r.back === './', 'lien retour : ' + r.back);
+        assert(r.sw <= r.cw, 'débordement horizontal');
+      });
+    }
+  }
+  await test('le pied de page mène aux 2 pages légales, et elles se renvoient l\'une à l\'autre', async () => {
+    const { ctx, page } = await openPage(browser, URL);
+    await page.click('footer a[href="mentions-legales.html"]');
+    await page.waitForLoadState('load');
+    const t1 = await page.evaluate(() => document.querySelector('h1').textContent);
+    await page.click('footer a[href="confidentialite.html"]');
+    await page.waitForLoadState('load');
+    const t2 = await page.evaluate(() => document.querySelector('article:not([hidden]) h1').textContent);
+    await ctx.close();
+    assert(/Mentions légales/.test(t1), 'page 1 : ' + t1);
+    assert(/confidentialité/i.test(t2), 'page 2 : ' + t2);
+  });
+  await test('les liens légaux s\'affichent bien dans le pied de page (pas ailleurs)', async () => {
+    const { ctx, page } = await openPage(browser, URL);
+    await page.evaluate(() => scrollTo(0, document.body.scrollHeight)); await page.waitForTimeout(400);
+    const r = await page.evaluate(() => { const f = document.querySelector('footer').getBoundingClientRect(); return [...document.querySelectorAll('footer .legal a')].map(a => { const b = a.getBoundingClientRect(); return b.top >= f.top && b.bottom <= f.bottom + 1 && getComputedStyle(a.parentElement).position === 'static'; }); });
+    await ctx.close();
+    assert(r.length === 2 && r.every(Boolean), 'liens mal placés : ' + JSON.stringify(r));
+  });
+  await test('changer de langue sur une page légale est retenu sur le site', async () => {
+    const { ctx, page } = await openPage(browser, URL.replace('index.html', 'confidentialite.html'));
+    await page.click('.langs [data-lang="nl"]');
+    const t = await page.evaluate(() => document.querySelector('article:not([hidden]) h1').textContent);
+    await page.goto(URL); await page.waitForTimeout(300);
+    const l = await page.evaluate(() => document.documentElement.lang);
+    await ctx.close();
+    assert(t === 'Privacybeleid', 'titre NL : ' + t);
+    assert(l === 'nl', 'langue sur le site : ' + l);
+  });
+
+  /* 12. SEO */
+  console.log('\nRéférencement');
+  await test('fiche entreprise Google (JSON-LD) valide avec e-mail, téléphone et adresse', async () => {
+    const m = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+    assert(m, 'JSON-LD absent');
+    const d = JSON.parse(m[1]);
+    assert(d.email === EMAIL && d.telephone === PHONE && d.address && d.address.postalCode === '1190', JSON.stringify(d).slice(0, 120));
+  });
+  await test('image de partage (Open Graph) 1200×630 présente', () => {
+    assert(/property="og:image" content="https:\/\/www\.idiztech\.be\/og-image\.png"/.test(html), 'balise og:image absente');
+    const b = fs.readFileSync(path.join(ROOT, 'og-image.png'));
+    assert(b.readUInt32BE(16) === 1200 && b.readUInt32BE(20) === 630, `taille ${b.readUInt32BE(16)}×${b.readUInt32BE(20)}`);
+  });
+  await test('robots.txt et sitemap.xml présents, et chaque page du sitemap existe', () => {
+    const robots = fs.readFileSync(path.join(ROOT, 'robots.txt'), 'utf8');
+    assert(/Sitemap: https:\/\/www\.idiztech\.be\/sitemap\.xml/.test(robots), 'robots.txt sans sitemap');
+    const urls = [...fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8').matchAll(/<loc>https:\/\/www\.idiztech\.be\/([^<]*)<\/loc>/g)].map(m => m[1] || 'index.html');
+    const missing = urls.filter(u => !fs.existsSync(path.join(ROOT, u)));
+    assert(urls.length >= 3 && !missing.length, 'pages manquantes : ' + missing.join(', '));
+  });
 
   /* ---------- summary ---------- */
   await browser.close(); srv.close();
