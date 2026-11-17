@@ -100,13 +100,8 @@
   [data-stream]{min-height:1.5em}
   .tok{opacity:0;filter:blur(3px);animation:tok .28s ease-out forwards}
   @keyframes tok{to{opacity:1;filter:blur(0)}}
-  .caret{display:inline-block;width:.85em;height:.85em;margin-left:.3em;vertical-align:-.08em;color:var(--fg)}
-  .caret svg{display:block;width:100%;height:100%;animation:spark 1.1s cubic-bezier(.5,0,.5,1) infinite}
-  @keyframes spark{0%{transform:rotate(0) scale(.8)}50%{transform:rotate(90deg) scale(1)}100%{transform:rotate(180deg) scale(.8)}}
-  .think{margin-left:.55em;font:400 .82em/1 var(--mono);letter-spacing:.04em;color:transparent;
-    background:linear-gradient(90deg,var(--mute) 0%,var(--mute) 35%,var(--fg) 50%,var(--mute) 65%,var(--mute) 100%);background-size:250% 100%;
-    -webkit-background-clip:text;background-clip:text;animation:shimmer 1.3s linear infinite}
-  @keyframes shimmer{from{background-position:100% 0}to{background-position:-150% 0}}
+  .caret{display:inline-block;width:.55em;height:1em;background:currentColor;vertical-align:-.12em;margin-left:2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
 
   /* services */
   .services{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
@@ -253,7 +248,7 @@
     <div class="q"><span class="who" data-i18n="hero.you">Vous</span><p data-i18n="hero.q">Qu'est-ce qu'Idiz Tech peut faire pour mon entreprise&nbsp;?</p></div>
     <div class="a"><img class="av" src="logos/idiz-tech.png" alt="" width="30" height="30">
       <div><span class="who">Idiz Tech</span>
-      <p data-stream data-think data-i18n="hero.a">Nous concevons des sites web, des applications, des solutions IT et d'intelligence artificielle sur mesure. Rapides, élégants, et pensés pour faire grandir votre activité.</p></div>
+      <p data-stream data-delay="250" data-i18n="hero.a">Nous concevons des sites web, des applications, des solutions IT et d'intelligence artificielle sur mesure. Rapides, élégants, et pensés pour faire grandir votre activité.</p></div>
     </div>
   </div>
   <a class="scroll-hint" href="#services" aria-label="Défiler vers le bas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M5 13l7 7 7-7"/></svg></a>
@@ -361,7 +356,7 @@
       "svc.1.t":"Sites web","svc.1.d":"Sites vitrines et e-commerce sur mesure, rapides, responsives et optimisés pour le référencement.",
       "svc.2.t":"Applications","svc.2.d":"Applications web et mobiles, back-offices et API connectés à vos outils métier.",
       "svc.3.t":"Support IT","svc.3.d":"Installation, maintenance et dépannage de votre parc informatique et de votre réseau.",
-      "svc.4.t":"Conseil & automatisation","hero.you":"Vous","hero.thinking":"Réflexion…","svc.5.t":"Intégration de l'IA","svc.5.d":"Assistants et chatbots, automatisation des tâches répétitives, recherche dans vos documents. Nous intégrons l'IA dans vos outils et dans votre société, de manière sûre et concrète.","svc.4.d":"Audit, choix des outils et automatisation de vos processus.",
+      "svc.4.t":"Conseil & automatisation","hero.you":"Vous","svc.5.t":"Intégration de l'IA","svc.5.d":"Assistants et chatbots, automatisation des tâches répétitives, recherche dans vos documents. Nous intégrons l'IA dans vos outils et dans votre société, de manière sûre et concrète.","svc.4.d":"Audit, choix des outils et automatisation de vos processus.",
       "clients":"Ils nous font confiance",
       "m.eyebrow":"02 · Méthode","m.title":"Simple. <i>Clair.</i> Efficace.","m.lead":"Un processus en quatre étapes, transparent du début à la fin.",
       "m.1.t":"Écoute","m.1.d":"Nous comprenons vos objectifs, vos contraintes et votre public.",
@@ -391,7 +386,7 @@
       "svc.1.t":"Websites","svc.1.d":"Showcase- en e-commercesites op maat: snel, responsive en geoptimaliseerd voor zoekmachines.",
       "svc.2.t":"Applicaties","svc.2.d":"Web- en mobiele applicaties, back-offices en API's gekoppeld aan uw bedrijfstools.",
       "svc.3.t":"IT-support","svc.3.d":"Installatie, onderhoud en herstelling van uw computers en uw netwerk.",
-      "svc.4.t":"Advies & automatisering","hero.you":"U","hero.thinking":"Even nadenken…","svc.5.t":"AI-integratie","svc.5.d":"Assistenten en chatbots, automatisering van repetitieve taken, zoeken in uw documenten. Wij integreren AI in uw tools en in uw bedrijf, veilig en concreet.","svc.4.d":"Audit, keuze van tools en automatisering van uw processen.",
+      "svc.4.t":"Advies & automatisering","hero.you":"U","svc.5.t":"AI-integratie","svc.5.d":"Assistenten en chatbots, automatisering van repetitieve taken, zoeken in uw documenten. Wij integreren AI in uw tools en in uw bedrijf, veilig en concreet.","svc.4.d":"Audit, keuze van tools en automatisering van uw processen.",
       "clients":"Zij vertrouwen ons",
       "m.eyebrow":"02 · Methode","m.title":"Eenvoudig. <i>Helder.</i> Efficiënt.","m.lead":"Een proces in vier stappen, transparant van begin tot eind.",
       "m.1.t":"Luisteren","m.1.d":"We begrijpen uw doelen, uw beperkingen en uw publiek.",
@@ -421,7 +416,7 @@
       "svc.1.t":"Websites","svc.1.d":"Custom showcase and e-commerce sites: fast, responsive and optimised for search engines.",
       "svc.2.t":"Applications","svc.2.d":"Web and mobile apps, back-offices and APIs connected to your business tools.",
       "svc.3.t":"IT support","svc.3.d":"Installation, maintenance and repair of your computers and network.",
-      "svc.4.t":"Consulting & automation","hero.you":"You","hero.thinking":"Thinking…","svc.5.t":"AI integration","svc.5.d":"Assistants and chatbots, automation of repetitive tasks, search across your documents. We bring AI into your tools and your company, safely and practically.","svc.4.d":"Audits, tool selection and automation of your processes.",
+      "svc.4.t":"Consulting & automation","hero.you":"You","svc.5.t":"AI integration","svc.5.d":"Assistants and chatbots, automation of repetitive tasks, search across your documents. We bring AI into your tools and your company, safely and practically.","svc.4.d":"Audits, tool selection and automation of your processes.",
       "clients":"They trust us",
       "m.eyebrow":"02 · Method","m.title":"Simple. <i>Clear.</i> Effective.","m.lead":"A four-step process, transparent from start to finish.",
       "m.1.t":"Listen","m.1.d":"We understand your goals, your constraints and your audience.",
@@ -504,21 +499,15 @@
 
   /* ---------- AI-style text streaming ---------- */
   if (reduce) return;
-  // Claude-like streaming: short "thinking" phase, spinning spark, words arriving in small chunks
-  const SPARK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>';
+  // ChatGPT-like streaming: starts right away, words arriving in small chunks, blinking cursor
   const stream = el => {
     const sid = el._sid = (el._sid || 0) + 1;
     el._state = 'streaming';
     const text = el.textContent.trim().replace(/\s+/g, ' ');
     el.style.minHeight = el.offsetHeight + 'px';
     el.textContent = '';
-    const caret = document.createElement('span'); caret.className = 'caret'; caret.innerHTML = SPARK;
+    const caret = document.createElement('span'); caret.className = 'caret';
     el.appendChild(caret);
-    let label = null;
-    if (el.hasAttribute('data-think')) {
-      label = document.createElement('span'); label.className = 'think'; label.textContent = I18N[lang]['hero.thinking'];
-      el.appendChild(label);
-    }
     el.style.visibility = '';
     // group words into chunks of 1 to 3, like model tokens arriving
     const words = text.split(' '), chunks = [];
@@ -540,7 +529,7 @@
       const last = chunks[i - 1].trim();
       setTimeout(next, /[.!?]$/.test(last) ? 170 + Math.random() * 80 : /[,:;]$/.test(last) ? 90 : 40 + Math.random() * 30);
     };
-    setTimeout(() => { if (el._sid !== sid) return; if (label) label.remove(); next(); }, label ? 900 : +(el.dataset.delay || 120));
+    setTimeout(next, +(el.dataset.delay || 120));
   };
   const sio = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { sio.unobserve(e.target); stream(e.target); }
