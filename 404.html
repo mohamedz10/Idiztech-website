@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Page introuvable · Idiz Tech</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/logos/idiz-tech.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<script>(function(){try{var t=localStorage.getItem('idiz-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<style>
+  :root{--bg:#0a0a0a;--fg:#f4f4f2;--mute:#8a8a87;--line:#232323;--accent:#f4f4f2;--on-accent:#0a0a0a;color-scheme:dark}
+  :root[data-theme="light"]{--bg:#f5f5f2;--fg:#0b0b0b;--mute:#6a6a66;--line:#dededa;--accent:#1d3fcf;--on-accent:#fff;color-scheme:light}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;text-align:center;
+    background:var(--bg);color:var(--fg);font:300 17px/1.6 "Inter",system-ui,sans-serif;
+    padding:40px max(24px,env(safe-area-inset-left,0px)) 40px max(24px,env(safe-area-inset-right,0px))}
+  img{width:64px;height:64px;border-radius:50%;box-shadow:0 0 0 1px var(--line)}
+  .code{font:400 12px "JetBrains Mono",monospace;letter-spacing:.16em;color:var(--mute)}
+  h1{font:400 clamp(44px,8vw,96px)/1 "Instrument Serif",Georgia,serif;letter-spacing:-.02em;text-wrap:balance}
+  h1 i{color:var(--mute)}
+  p{color:var(--mute);max-width:32em}
+  a.btn{display:inline-flex;border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);padding:12px 22px;border-radius:999px;font-size:14px;text-decoration:none;transition:background .25s,color .25s}
+  a.btn:hover{background:transparent;color:var(--accent)}
+  a:focus-visible{outline:1px solid var(--accent);outline-offset:3px}
+</style>
+</head>
+<body>
+  <a href="/" aria-label="Idiz Tech"><img src="/logos/idiz-tech.png" alt="Idiz Tech" width="64" height="64"></a>
+  <div class="code">404</div>
+  <h1 id="t">Page <i>introuvable.</i></h1>
+  <p id="d">Cette page n'existe pas ou a été déplacée.</p>
+  <a class="btn" id="b" href="/">Retour à l'accueil</a>
+<script>
+(function(){
+  var T={fr:["Page <i>introuvable.</i>","Cette page n'existe pas ou a été déplacée.","Retour à l'accueil"],
+         nl:["Pagina <i>niet gevonden.</i>","Deze pagina bestaat niet of werd verplaatst.","Terug naar home"],
+         en:["Page <i>not found.</i>","This page doesn't exist or has been moved.","Back to home"]};
+  var l=null;try{l=localStorage.getItem('idiz-lang');}catch(e){}
+  if(!T[l]){var n=(navigator.language||'fr').slice(0,2).toLowerCase();l=T[n]?n:'fr';}
+  document.documentElement.lang=l;
+  document.getElementById('t').innerHTML=T[l][0];
+  document.getElementById('d').textContent=T[l][1];
+  document.getElementById('b').textContent=T[l][2];
+})();
+</script>
+</body>
+</html>

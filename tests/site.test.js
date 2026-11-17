@@ -376,6 +376,22 @@ const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - 
     assert(!small.length, 'trop petits : ' + small.join(', '));
   });
 
+  /* 9. Custom 404 page */
+  console.log('\nPage 404');
+  for (const l of LANGS) {
+    await test(`page 404 en ${l.toUpperCase()} : logo, texte traduit, lien vers l'accueil, sans mention Netlify`, async () => {
+      const { ctx, page, problems } = await openPage(browser, URL.replace('index.html', '404.html'), { locale: { fr: 'fr-BE', nl: 'nl-BE', en: 'en-GB' }[l] });
+      await page.waitForTimeout(300);
+      const r = await page.evaluate(() => ({ lang: document.documentElement.lang, img: document.querySelector('img').naturalWidth, href: document.querySelector('a.btn').getAttribute('href'), txt: document.body.innerText }));
+      await ctx.close();
+      assert(!problems.length, problems.join('\n'));
+      assert(r.lang === l, 'langue : ' + r.lang);
+      assert(r.img > 0, 'logo non chargé');
+      assert(r.href === '/', 'lien accueil : ' + r.href);
+      assert(!/netlify/i.test(r.txt), 'mention Netlify visible');
+    });
+  }
+
   /* ---------- summary ---------- */
   await browser.close(); srv.close();
   const fail = results.filter(r => !r.ok);
